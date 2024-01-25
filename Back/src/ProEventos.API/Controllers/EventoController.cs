@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ProEventos.API.Data;
 using ProEventos.API.Models;
 
 namespace ProEventos.API.Controllers;
@@ -7,22 +8,24 @@ namespace ProEventos.API.Controllers;
 [Route("api/[controller]")]
 public class EventoController : ControllerBase
 {
-    public EventoController()
+    private readonly DataContext _context;
+
+    public EventoController(DataContext context)
     {
-       
+            _context = context;
     }
    
 
     [HttpGet]
-    public IEnumerable<Evento> Get()
+    public List<Evento> Get()
     {
-        return _evento;        
+        return _context.Eventos.ToList();        
     }
 
     [HttpGet("{id}")]
-    public IEnumerable<Evento> GetById(int id)
+    public Evento? GetById(int id)
     {
-        return _evento.Where(evento => evento.EventoId == id);        
+        return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);        
     }
 
     [HttpPost]
@@ -42,26 +45,5 @@ public class EventoController : ControllerBase
     {
         return $"Exemplo Delete com Id {id}";
     }
-
-
-    private IEnumerable<Evento> _evento = new Evento[]{
-            new (){
-                EventoId = 1,
-                Tema = "Angular 11 e .NET 6",
-                Local = "Belo Horizonte",
-                DataEvento = DateTime.Now.AddDays(2).ToShortDateString(),
-                QtdPessoas = 250,
-                Lote = "1º Lote",
-                ImagemURL = "foto.png"
-            },
-            new (){
-                EventoId = 2,
-                Tema = "Angular RxJs",
-                Local = "São Paulo",
-                DataEvento = DateTime.Now.AddDays(2).ToShortDateString(),
-                QtdPessoas = 350,
-                Lote = "1º Lote",
-                ImagemURL = "foto.png"
-            }
-    };
+  
 }
