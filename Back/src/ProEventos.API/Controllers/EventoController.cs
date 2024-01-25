@@ -19,13 +19,17 @@ public class EventoController : ControllerBase
     [HttpGet]
     public List<Evento> Get()
     {
-        return _context.Eventos.ToList();        
+#pragma warning disable CS8604 // Possible null reference argument.
+        return _context.Eventos.ToList();
+#pragma warning restore CS8604 // Possible null reference argument.
     }
 
     [HttpGet("{id}")]
     public Evento? GetById(int id)
     {
-        return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);        
+#pragma warning disable CS8604 // Possible null reference argument.
+        return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
+#pragma warning restore CS8604 // Possible null reference argument.
     }
 
     [HttpPost]
