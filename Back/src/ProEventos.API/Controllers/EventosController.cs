@@ -6,11 +6,11 @@ namespace ProEventos.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class EventoController : ControllerBase
+public class EventosController : ControllerBase
 {
     private readonly DataContext _context;
 
-    public EventoController(DataContext context)
+    public EventosController(DataContext context)
     {
             _context = context;
     }
@@ -19,9 +19,7 @@ public class EventoController : ControllerBase
     [HttpGet]
     public List<Evento> Get()
     {
-#pragma warning disable CS8604 // Possible null reference argument.
-        return _context.Eventos.ToList();
-#pragma warning restore CS8604 // Possible null reference argument.
+        return _context.Eventos?.ToList();
     }
 
     [HttpGet("{id}")]
